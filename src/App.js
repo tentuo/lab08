@@ -12,7 +12,6 @@ import Main from './components/MainComponent';
 import { BrowserRouter } from 'react-router-dom';
 
 
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -21,23 +20,18 @@ class App extends Component {
     };
   }
   
-  onDishSelect(dish) {
-    this.setState({ selectedDish: dish});
-  }
-
   render() {
     return (
-      <BrowserRouter>
       <div className="App">
-         <Main />
+        <BrowserRouter>
+          <Main />
+        </BrowserRouter>
       </div>
-      </BrowserRouter>
     );
   }
 }
 
 export default App;
-
 
 
 

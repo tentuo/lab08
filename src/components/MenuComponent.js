@@ -4,13 +4,18 @@ import { Media } from 'reactstrap';
 import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 'reactstrap';
 import { Container, Col, Form, Row, FormGroup, Label, Input, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { baseUrl } from "../shared/baseUrl";
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { DISHES } from '../shared/dishes';
+import { COMMENTS } from '../shared/comments';
+import { PROMOTIONS } from '../shared/promotions';
+import { LEADERS } from '../shared/leaders';
 
 class Menu extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedDish: null
+            selectedDish: null,
         }
     }
     
@@ -21,48 +26,17 @@ class Menu extends Component {
     onDishSelect(dish) {
         this.setState({ selectedDish: dish});
     }
-
-    renderDish(dish) {
-        if (dish != null)
-            return(
-                <Card>
-                    <CardImg top src={dish.image} alt={dish.name} />
-                    <CardBody>
-                      <CardTitle>{dish.name}</CardTitle>
-                      <CardText>{dish.description}</CardText>
-                    </CardBody>
-                </Card>
-            );
-        else
-            return(
-                <div></div>
-            );
-    }
     
-    RenderMenuItem ({dish, onClick}) {
-        return (
-            <Card>
-                <Link to={`/menu/${dish.id}`} >
-                    <CardImg width="100%" src={dish.image} alt={dish.name} />
-                    <CardImgOverlay>
-                        <CardTitle>{dish.name}</CardTitle>
-                    </CardImgOverlay>
-                </Link>
-            </Card>
-        );
-    }
-
     render() {
-        const menu = this.props.dish.map((dish) => {
+        const menu = DISHES.map(dish => {
             return (
                 <div className="col-12 col-md-5 m-1">
-                    <Card key={dish.id}
-                        onClick={() => this.onDishSelect(dish)}>
-                        <CardImg width="100%" src={dish.image} alt={dish.name} />
-                        <CardImgOverlay>
+                    <div key={dish.id}  onClick={() => this.onDishSelect(dish)}>
+                        <Link to={`/menu/${dish.id}`}>
+                            <CardImg src={baseUrl + dish.image} />
                             <CardTitle>{dish.name}</CardTitle>
-                        </CardImgOverlay>
-                    </Card>
+                        </Link>
+                    </div>
                 </div>
             );
         });
@@ -71,8 +45,8 @@ class Menu extends Component {
             <div className="container">
                 <div className="row">
                     <Breadcrumb>
-                        <BreadcrumbItem><Link to="/home">Home</Link></BreadcrumbItem>
-                        <BreadcrumbItem active>Menu</BreadcrumbItem>
+                        <BreadcrumbItem><Link to="/menu">Menu</Link></BreadcrumbItem>
+                        <BreadcrumbItem active></BreadcrumbItem>
                     </Breadcrumb>
                     <div className="col-12">
                         <h3>Menu</h3>
@@ -84,7 +58,7 @@ class Menu extends Component {
                 </div>
                 <div className="row">
                   <div  className="col-12 col-md-5 m-1">
-                    {this.renderDish(this.state.selectedDish)}
+                    
                   </div>
                 </div>
             </div>
