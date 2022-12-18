@@ -15,9 +15,12 @@ import { BrowserRouter as Router, BrowserRouter } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 'reactstrap';
 import Dishchitiet from './Dishchitiet';
-import { postComment, addComment, fetchDishes, fetchComments, fetchPromos } from '../redux/ActionCreators';
+import { postComment, addComment, fetchDishes, fetchComments, fetchPromos, fetchLeaders } from '../redux/ActionCreators';
 import {connect} from 'react-redux';
 import {actions, action} from 'react-redux-form';
+
+
+
 
 const mapStateToProps = state => {
   return {
@@ -35,6 +38,7 @@ const mapDispatchToProps = (dispatch) => ({
   resetFeedbackForm: () => { dispatch(actions.reset('feedback'))},
   fetchComments: () => {dispatch(fetchComments())},
   fetchPromos: () => {dispatch(fetchPromos())},
+  fetchLeaders: () => {dispatch(fetchLeaders())},
 });
 
 
@@ -55,6 +59,7 @@ class Main extends Component {
     //this.props.fetchDishes();
     //this.props.fetchComments();
     //this.props.fetchPromos();
+    //this.props.fetchLeaders();
   }
 
   render() {

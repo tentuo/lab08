@@ -2,6 +2,9 @@ import {ADD_COMMENTS, ADD_COMMENT, COMMENTS_FAILED, COMMENT_FAILED, PROMOS_LOADI
 import * as ActionTypes from './ActionTypes';
 import { baseUrl } from '../shared/baseUrl';
 import {DISHES} from '../shared/dishes';
+import {COMMENTS} from '../shared/comments';
+import {PROMOTIONS} from '../shared/promotions';
+import {LEADERS} from '../shared/leaders';
 
 
 export const addComment = (dishId, rating, author, comment) => ({
@@ -43,7 +46,7 @@ export const postComment = (dishId, rating, author, comment) => (dispatch) => {
     },
     error => {
           var errmess = new Error(error.message);
-          throw error;
+          throw errmess;
     })
   .then(response => response.json())
   .then(response => dispatch(addComment(response)))
@@ -149,4 +152,39 @@ export const promosFailed = (errmess) => ({
 export const addPromos = (promos) => ({
     type: ActionTypes.ADD_PROMOS,
     payload: promos
+});
+
+
+export const fetchLeaders = () => (dispatch) => {
+    
+  dispatch(leadersLoading());
+
+  return fetch(baseUrl + 'leaders')
+  .then(response => {
+      if (response.ok) {
+        return response;
+      } else {
+        var error = new Error('Error ' + response.status + ': ' + response.statusText);
+        error.response = response;
+        throw error;
+      }
+    },
+    error => {
+          var errmess = new Error(error.message);
+          throw errmess;
+    })
+  .then(response => response.json())
+  .then(leaders => dispatch(addPromos(leaders)))
+  .catch(error => dispatch(promosFailed(error.message)));
+}
+export const leadersLoading = () => ({
+  type: ActionTypes.LEADERS_LOADING,
+});
+export const leadersFailed = (errmess) => ({
+  type: ActionTypes.LEADERS_FAILED,
+  payload: errmess
+});
+export const addLeaders = (leaders) => ({
+  type: ActionTypes.ADD_LEADERS,
+  payload: leaders
 });
